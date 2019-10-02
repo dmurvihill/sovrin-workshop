@@ -10,7 +10,7 @@ from aries_staticagent import (
 class FeatureDiscovery(Module):
     """ Module for Feature Discovery Protocol """
     DOC_URI = 'did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/'
-    PROTOCOL = 'protocol-discovery'
+    PROTOCOL = 'discover-features'
     VERSION = '1.0'
 
     @route
