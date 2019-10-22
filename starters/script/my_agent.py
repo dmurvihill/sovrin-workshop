@@ -9,6 +9,7 @@ from aries_staticagent import (
     StaticConnection,
     crypto,
     utils,
+    Message
 )
 
 
@@ -68,12 +69,13 @@ def main():
 
     conn = StaticConnection(my_vk, my_sk, their_vk, endpoint)
 
-    print('Pinging connection...')
+    ping = Message({
+        "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/trust_ping/1.0/ping",
+        "response_requested": True
+    })
+    print('Pinging connection:', ping.pretty_print())
     reply = conn.send_and_await_reply(
-        {
-            "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/trust_ping/1.0/ping",
-            "response_requested": True
-        },
+        ping,
         return_route='all',
         timeout=5
     )
