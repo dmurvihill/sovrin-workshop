@@ -1,12 +1,30 @@
 # Workshop Cheatsheet
 ## Issue Credential Admin Messages
 
-This cheatsheet contains example messages types that you can use to issue credentials to agent connections. 
+This cheatsheet contains example message types that you can use to issue credentials to agent connections. 
 
 Note: In order to send these messages, the static agent connection must have the 'admin' role.
 
 
+
+### Return Routing
+
+Each message you send may need a `~transport` `return_route` option specified. This can be done using a library option if it provides one, or by including it directly as shown :
+
+```json
+{
+  "@type": "example_message_type",
+  "~transport": {
+    "return_route": "all"
+  },
+  "other": "message attributes"
+}
+```
+
+The examples below include it to help prevent issues, but you may remove it if your library provides this feature.
+
 ### Connections
+
 ```json
 // Connection Get List
 {
@@ -61,7 +79,7 @@ Note: In order to send these messages, the static agent connection must have the
     "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin-credential-definitions/1.0/credential-definition-list",
     "~transport": {
       "return_route": "all"
-    }
+    },
     "results": [
     	{
     		"cred_def_id": "",
