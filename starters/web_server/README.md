@@ -1,7 +1,11 @@
 Sovrin Workshop Materials
 =========================
 
-This is a static agent that knows the connection protocol and has a basic message auto responder.
+This starter kit starts a web server and listens for messages, asynchronously processing them through registered
+handlers.
+
+This starter kit will setup keys, taking the connected full agent's keys as inputs and then send a trust ping, awaiting
+a reply, before starting up the web server.
 
 Requirements
 ------------
@@ -24,5 +28,21 @@ $ pip install -r requirements.txt
 
 Run the agent:
 ```sh
-$ python main.py --port 3001
+$ python my_agent.py --port 3001
 ```
+
+Connecting using the Aries Toolbox
+----------------------------------
+
+Static agents are generally statically connected to a "full" agent and serve a specific purpose in triggering actions in
+the full agent. For agent's supporting `admin-static-connections`, the Aries Toolbox can be used to connect your static
+agent to your full agent.
+
+1. Open your toolbox and connect it to the agent you'd like your static agent to connect to.
+2. Navigate to the "Static Connections" section.
+3. Ensure you started your static agent and copy your DID and verification key (VK) to the form in the "Static
+   Connections" section. Submit the form.
+4. From the returned static connection info, copy the verification key of the full agent and paste into the input for
+   your static agent. Copy the endpoint of the full agent and paste into the input for your static agent.
+
+Your static agent and your full agent are now connected!

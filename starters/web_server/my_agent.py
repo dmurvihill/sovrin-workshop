@@ -1,4 +1,4 @@
-"""IIW Demo"""
+"""Web Server Starter Kit"""
 import argparse
 import json
 import os
@@ -17,7 +17,7 @@ from protocols.feature_discovery import FeatureDiscovery
 # Config Start
 
 def config():
-    """ Get config """
+    """Get config."""
     def environ_or_required(key):
         if os.environ.get(key):
             return {'default': os.environ.get(key)}
