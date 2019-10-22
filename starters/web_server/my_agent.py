@@ -11,10 +11,6 @@ from aries_staticagent import (
     utils,
 )
 
-from protocols.connections import Connections
-from protocols.feature_discovery import FeatureDiscovery
-
-# Config Start
 
 def config():
     """Get config."""
