@@ -1,2 +1,2 @@
--e git+https://github.com/dbluhm/aries-staticagent-python@feature/return_routing#egg=aries_staticagent
+aries-staticagent
 aiohttp
