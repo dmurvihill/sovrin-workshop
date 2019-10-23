@@ -27,9 +27,10 @@ Medici Coding Challenge Checklist
 
 ### Tier 4 Goals
 
-- [ ] Using the [connections protocol module](../../protocols/connections.py) found
-	in this repository, connect your starter kit directly to the toolbox and
-	experiment with writing your own protocol.
+- [ ] Using the [connections protocol module](../../protocols/connections.py) or
+	[connection protocol enabled starter kit](../../starters/with_connections)
+	found in this repository, connect your starter kit directly to the toolbox
+	and experiment with writing your own protocol.
 
 ### Tier 5 Goals
 
