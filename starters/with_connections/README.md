@@ -4,7 +4,7 @@ Connections Protocol enabled Starter Kit
 This starter kit uses the connection protocol to establish connections with
 other agents. This starter kit can be used to connect directly to the Aries
 Toolbox for experimentation and other purposes (see [the starters
-readme](../README.md##connecting-directly-to-the-aries-toolbox) for more
+readme](../README.md#connecting-directly-to-the-aries-toolbox) for more
 details).
 
 Requirements
