@@ -9,7 +9,7 @@ Medici Coding Challenge Checklist
 
 ### Tier 1 Goals
 
-- [ ] Programmatically pull down your agent's connection list.
+- [x] Programmatically pull down your agent's connection list.
 - [ ] Programmatically pull down your agent's list of schemas or credential
 	definitions (Use the toolbox to create schemas and credential definitions).
 
