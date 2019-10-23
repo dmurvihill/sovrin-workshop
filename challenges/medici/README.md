@@ -32,7 +32,7 @@ Tier 3 Goals
 Tier 4 Goals
 ------------
 
-- [ ] Using the [connections protocol module](../protocols/connections.py) found
+- [ ] Using the [connections protocol module](../../protocols/connections.py) found
 	in this repository, connect your starter kit directly to the toolbox and
 	experiment with writing your own protocol.
 
