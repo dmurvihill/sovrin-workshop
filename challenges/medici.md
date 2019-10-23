@@ -1,4 +1,4 @@
-Medici Training Coding Challenge Checklist
+Medici Coding Challenge Checklist
 ==========================================
 
 Basics and Setup
