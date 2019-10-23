@@ -64,23 +64,24 @@ def create_or_recall_keys(replace: bool = False):
 
 def ping(connection):
     type_did = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/trust_ping/1.0/ping"
-    send(connection, Message({
+    send(connection, {
         "@type": type_did,
         "response_requested": True
-    }))
+    })
 
 
 def get_connections(connection):
     type_did = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin-connections/1.0/connection-get-list"
-    send(connection, Message({
+    send(connection, {
       "@type": type_did,
       "~transport": {
         "return_route": "all"
       }
-    }))
+    })
 
 
-def send(connection, message):
+def send(connection, message_body):
+    message = Message(message_body)
     print('Sending message:', message.pretty_print())
     reply = connection.send_and_await_reply(
         message,
