@@ -82,6 +82,16 @@ class Session(object):
           }
         })
 
+    def get_credential_definitions(self):
+        type_did = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/" + \
+            "admin-credential-definitions/1.0/credential-definition-get-list"
+        return self._send({
+            "@type": type_did,
+            "~transport": {
+              "return_route": "all"
+            }
+        })
+
     def _send(self, message_body):
         message = Message(message_body)
         print('Sending message:', message.pretty_print())
@@ -103,6 +113,7 @@ def main():
     session = Session(conn)
     session.ping()
     session.get_connections()
+    session.get_credential_definitions()
 
 
 if __name__ == '__main__':
