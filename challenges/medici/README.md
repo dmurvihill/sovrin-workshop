@@ -3,9 +3,9 @@ Medici Coding Challenge Checklist
 
 ### Basics and Setup
 
-- [ ] Setup and run one of the agent starter kits.
-- [ ] Connect your starter kit to one of your full agents.
-- [ ] Successfully ping the full agent.
+- [x] Setup and run one of the agent starter kits.
+- [x] Connect your starter kit to one of your full agents.
+- [x] Successfully ping the full agent.
 
 ### Tier 1 Goals
 
