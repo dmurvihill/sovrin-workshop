@@ -62,6 +62,17 @@ def create_or_recall_keys(replace: bool = False):
     return did, my_vk, my_sk, their_vk, endpoint
 
 
+def send(connection, message):
+    print('Sending message:', message.pretty_print())
+    reply = connection.send_and_await_reply(
+        message,
+        return_route='all',
+        timeout=5
+    )
+    print('Response:', reply.pretty_print())
+    return reply
+
+
 def main():
     """Main."""
     args = config()
@@ -73,13 +84,7 @@ def main():
         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/trust_ping/1.0/ping",
         "response_requested": True
     })
-    print('Pinging connection:', ping.pretty_print())
-    reply = conn.send_and_await_reply(
-        ping,
-        return_route='all',
-        timeout=5
-    )
-    print('Response:', reply.pretty_print())
+    reply = send(conn, ping)
 
 
 if __name__ == '__main__':
