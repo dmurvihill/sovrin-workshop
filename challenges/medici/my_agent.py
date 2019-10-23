@@ -63,29 +63,29 @@ def create_or_recall_keys(replace: bool = False):
 
 
 class Session(object):
-    def __init__(self):
-        pass
+    def __init__(self, connection):
+        self.connection = connection
 
-    def ping(self, connection):
+    def ping(self):
         type_did = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/trust_ping/1.0/ping"
-        self._send(connection, {
+        self._send({
             "@type": type_did,
             "response_requested": True
         })
 
-    def get_connections(self, connection):
+    def get_connections(self):
         type_did = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin-connections/1.0/connection-get-list"
-        self._send(connection, {
+        self._send({
           "@type": type_did,
           "~transport": {
             "return_route": "all"
           }
         })
 
-    def _send(self, connection, message_body):
+    def _send(self, message_body):
         message = Message(message_body)
         print('Sending message:', message.pretty_print())
-        reply = connection.send_and_await_reply(
+        reply = self.connection.send_and_await_reply(
             message,
             return_route='all',
             timeout=5
@@ -100,9 +100,9 @@ def main():
     _did, my_vk, my_sk, their_vk, endpoint = create_or_recall_keys(args.replace)
 
     conn = StaticConnection(my_vk, my_sk, their_vk, endpoint)
-    session = Session()
-    session.ping(conn)
-    session.get_connections(conn)
+    session = Session(conn)
+    session.ping()
+    session.get_connections()
 
 
 if __name__ == '__main__':
