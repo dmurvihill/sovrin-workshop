@@ -62,6 +62,13 @@ def create_or_recall_keys(replace: bool = False):
     return did, my_vk, my_sk, their_vk, endpoint
 
 
+def ping(connection):
+    send(connection, Message({
+        "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/trust_ping/1.0/ping",
+        "response_requested": True
+    })
+
+
 def send(connection, message):
     print('Sending message:', message.pretty_print())
     reply = connection.send_and_await_reply(
@@ -79,12 +86,7 @@ def main():
     _did, my_vk, my_sk, their_vk, endpoint = create_or_recall_keys(args.replace)
 
     conn = StaticConnection(my_vk, my_sk, their_vk, endpoint)
-
-    ping = Message({
-        "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/trust_ping/1.0/ping",
-        "response_requested": True
-    })
-    reply = send(conn, ping)
+    ping(conn)
 
 
 if __name__ == '__main__':
