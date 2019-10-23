@@ -61,6 +61,15 @@ def create_or_recall_keys(replace: bool = False):
 
     return did, my_vk, my_sk, their_vk, endpoint
 
+def noisy_send_and_await_reply(output, conn, msg):
+    """Log messages sent as they are sent."""
+    if isinstance(msg, dict):
+        msg = Message(msg)
+    print(output, msg.pretty_print())
+    reply = conn.send_and_await_reply(msg, return_route='all', timeout=5)
+    print('Response:', reply.pretty_print())
+    return reply
+
 
 def main():
     """Main."""
@@ -69,17 +78,62 @@ def main():
 
     conn = StaticConnection(my_vk, my_sk, their_vk, endpoint)
 
-    ping = Message({
-        "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/trust_ping/1.0/ping",
-        "response_requested": True
-    })
-    print('Pinging connection:', ping.pretty_print())
-    reply = conn.send_and_await_reply(
-        ping,
-        return_route='all',
-        timeout=5
+    noisy_send_and_await_reply(
+        'Pinging connection:',
+        conn,
+        {
+            "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/trust_ping/1.0/ping",
+            "response_requested": True
+        }
     )
-    print('Response:', reply.pretty_print())
+
+    connections = noisy_send_and_await_reply(
+        'Fetching connections:',
+        conn,
+        {
+            "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin-connections/1.0/connection-get-list",
+        }
+    )
+
+    holder_connection = next(filter(
+        lambda connection: connection['their_label'] == 'Holder',
+        connections['results']
+    ))
+    print('Found holder:', holder_connection)
+
+    cred_def_id = input('Credential Definition ID: ')
+
+    cred_def_info = noisy_send_and_await_reply(
+        'Fetching Credential Definition:',
+        conn,
+        {
+            "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin-credential-definitions/1.0/credential-definition-get",
+            'cred_def_id': cred_def_id
+        }
+    )
+
+    attributes = []
+    for attribute in cred_def_info['attributes']:
+        attributes.append({
+            'name': attribute,
+            'value': input(attribute + ': ')
+        })
+
+    print('Issuing credential with attributes:', attributes)
+    noisy_send_and_await_reply(
+        'Triggering credential send:',
+        conn,
+        {
+            "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin-issuer/1.0/send-credential",
+            "comment": "testing issuance of credential",
+            "credential_definition_id": cred_def_id,
+            "connection_id": holder_connection['connection_id'],
+            "credential_proposal": {
+                "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/issue-credential/1.0/credential-preview",
+                'attributes': attributes
+            }
+        }
+    )
 
 
 if __name__ == '__main__':
