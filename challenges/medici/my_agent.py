@@ -62,34 +62,36 @@ def create_or_recall_keys(replace: bool = False):
     return did, my_vk, my_sk, their_vk, endpoint
 
 
-def ping(connection):
-    type_did = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/trust_ping/1.0/ping"
-    send(connection, {
-        "@type": type_did,
-        "response_requested": True
-    })
+class Session(object):
+    def __init__(self):
+        pass
 
+    def ping(self, connection):
+        type_did = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/trust_ping/1.0/ping"
+        self._send(connection, {
+            "@type": type_did,
+            "response_requested": True
+        })
 
-def get_connections(connection):
-    type_did = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin-connections/1.0/connection-get-list"
-    send(connection, {
-      "@type": type_did,
-      "~transport": {
-        "return_route": "all"
-      }
-    })
+    def get_connections(self, connection):
+        type_did = "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/admin-connections/1.0/connection-get-list"
+        self._send(connection, {
+          "@type": type_did,
+          "~transport": {
+            "return_route": "all"
+          }
+        })
 
-
-def send(connection, message_body):
-    message = Message(message_body)
-    print('Sending message:', message.pretty_print())
-    reply = connection.send_and_await_reply(
-        message,
-        return_route='all',
-        timeout=5
-    )
-    print('Response:', reply.pretty_print())
-    return reply
+    def _send(self, connection, message_body):
+        message = Message(message_body)
+        print('Sending message:', message.pretty_print())
+        reply = connection.send_and_await_reply(
+            message,
+            return_route='all',
+            timeout=5
+        )
+        print('Response:', reply.pretty_print())
+        return reply
 
 
 def main():
@@ -98,8 +100,9 @@ def main():
     _did, my_vk, my_sk, their_vk, endpoint = create_or_recall_keys(args.replace)
 
     conn = StaticConnection(my_vk, my_sk, their_vk, endpoint)
-    ping(conn)
-    get_connections(conn)
+    session = Session()
+    session.ping(conn)
+    session.get_connections(conn)
 
 
 if __name__ == '__main__':
