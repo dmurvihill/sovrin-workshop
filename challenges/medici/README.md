@@ -74,3 +74,7 @@ README](../../starters).
 You accomplish nearly all of the above goals by sending messages to your agents.
 A [cheatsheet](../../guides/Issue_Credential_Admin_Message_Cheatsheet.md) has
 been provided for the format and schema of those messages.
+
+If you want to explore more functionality beyond what is shown in the cheat
+sheet, you can use the "Message History" tab of the toolbox to examine how the
+toolbox performs that other functionality.
